@@ -34,7 +34,23 @@ class KemController extends Controller
 
     public function encapsulationPage()
     {
-        return view('encapsulation');
+        return view('encapsulation', [
+            'encapsulationResult' => session('encapsulation'),
+        ]);
+    }
+
+    public function encapsulate(Request $request)
+    {
+        $validated = $request->validate([
+            'public-key' => ['required', 'string'],
+            'encoding' => ['required', 'in:base64,dna'],
+        ]);
+
+        $encapsulation = $this
+            ->kemService
+            ->encapsulate($validated['public-key'], $validated['encoding']);
+
+        return back()->with('encapsulation', $encapsulation);
     }
 
     public function decapsulationPage()
