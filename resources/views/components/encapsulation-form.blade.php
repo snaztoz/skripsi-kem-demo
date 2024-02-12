@@ -12,7 +12,7 @@
 
   <div class="row align-items-center mt-3">
     <div class="col-3">
-      <p class="m-0">✍️ Encoding</p>
+      <p class="m-0">🔡 Encoding</p>
     </div>
     <div class="col">
       <select
