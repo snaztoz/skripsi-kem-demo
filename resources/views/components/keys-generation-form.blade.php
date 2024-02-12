@@ -3,7 +3,7 @@
 
   <div class="row align-items-center">
     <div class="col-3">
-      <p class="m-0">Algorithm:</p>
+      <p class="m-0">🏭 Algorithm</p>
     </div>
     <div class="col">
       <select
@@ -18,7 +18,7 @@
   </div>
 
   <input
-    type="button"
+    type="submit"
     value="Generate New Keys"
     class="btn btn-primary d-block w-100 mt-4"
   />

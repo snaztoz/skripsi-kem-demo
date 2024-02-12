@@ -12,7 +12,7 @@
       <div class="col-6">
         <x-keys-generation-form />
         <hr />
-        <x-keys-generation-result />
+        <x-keys-generation-result :$generationResult />
       </div>
     </div>
   </div>

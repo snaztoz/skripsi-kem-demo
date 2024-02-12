@@ -19,6 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('/keys-generation', [KemController::class, 'keysGenerationPage']);
+Route::post('/keys-generation', [KemController::class, 'keysGeneration']);
 
 Route::get('/encapsulation', [KemController::class, 'encapsulationPage']);
 
