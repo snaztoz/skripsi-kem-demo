@@ -12,7 +12,7 @@
       <div class="col-6">
         <x-decapsulation-form />
         <hr />
-        <x-decapsulation-result />
+        <x-decapsulation-result :$decapsulationResult />
       </div>
     </div>
   </div>

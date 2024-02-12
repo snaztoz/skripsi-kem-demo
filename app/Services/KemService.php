@@ -24,4 +24,9 @@ class KemService
             return new Encapsulation('some-secret', 'some-dna-encoded-ciphertext');
         }
     }
+
+    public function decapsulate(string $privateKey, string $ciphertext): string
+    {
+        return 'some-secret';
+    }
 }

@@ -8,19 +8,18 @@ use Illuminate\View\Component;
 
 class DecapsulationResult extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
-    {
-        //
+    public function __construct(
+        public ?string $decapsulationResult,
+    ) {
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
     public function render(): View|Closure|string
     {
         return view('components.decapsulation-result');
+    }
+
+    public function shouldRender(): bool
+    {
+        return ! is_null($this->decapsulationResult);
     }
 }

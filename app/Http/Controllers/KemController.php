@@ -55,6 +55,22 @@ class KemController extends Controller
 
     public function decapsulationPage()
     {
-        return view('decapsulation');
+        return view('decapsulation', [
+            'decapsulationResult' => session('decapsulation'),
+        ]);
+    }
+
+    public function decapsulate(Request $request)
+    {
+        $validated = $request->validate([
+            'private-key' => ['required', 'string'],
+            'ciphertext' => ['required', 'string'],
+        ]);
+
+        $decapsulation = $this
+            ->kemService
+            ->decapsulate($validated['private-key'], $validated['ciphertext']);
+
+        return back()->with('decapsulation', $decapsulation);
     }
 }

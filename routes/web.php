@@ -25,3 +25,4 @@ Route::get('/encapsulation', [KemController::class, 'encapsulationPage']);
 Route::post('/encapsulation', [KemController::class, 'encapsulate']);
 
 Route::get('/decapsulation', [KemController::class, 'decapsulationPage']);
+Route::post('/decapsulation', [KemController::class, 'decapsulate']);
