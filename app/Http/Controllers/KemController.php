@@ -27,7 +27,7 @@ class KemController extends Controller
 
         $keypair = $this
             ->kemService
-            ->generateNewKeypair($validated['algorithm']);
+            ->generateKeypair($validated['algorithm']);
 
         return back()->with('keypair', $keypair);
     }
