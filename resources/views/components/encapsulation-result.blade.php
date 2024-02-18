@@ -13,7 +13,11 @@
       <p class="m-0">❔ Ciphertext</p>
     </div>
     <div class="col">
-      <textarea class="form-control" readonly>{{ $encapsulationResult->ciphertext }}</textarea>
+      <textarea
+        class="form-control"
+        rows="8"
+        readonly
+      >{{ $encapsulationResult->ciphertext }}</textarea>
     </div>
   </div>
 </div>

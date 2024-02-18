@@ -4,14 +4,16 @@ namespace App\Services;
 
 use App\Dto\Encapsulation;
 use App\Dto\Keypair;
+use App\Repositories\KeyRepository;
 use Illuminate\Support\Facades\Process;
 
 class KemBinaryService implements KemService
 {
     private string $bin;
 
-    public function __construct()
-    {
+    public function __construct(
+        private KeyRepository $keyRepository,
+    ) {
         $this->bin = storage_path('app/bin/kem');
     }
 
@@ -30,11 +32,18 @@ class KemBinaryService implements KemService
 
     public function encapsulate(string $publicKey, string $encoding): Encapsulation
     {
-        if ($encoding === 'base64') {
-            return new Encapsulation('some-secret', 'some-base64-encoded-ciphertext');
-        } else {
-            return new Encapsulation('some-secret', 'some-dna-encoded-ciphertext');
+        $this->keyRepository->storePublicKey($publicKey);
+
+        $command = collect([$this->bin, 'encapsulate']);
+        if ($encoding === 'dna') {
+            $command->push('--dna');
         }
+        $command->push(storage_path('app/public.pem'));
+
+        $result = Process::run($command->toArray())->output();
+        $resultJson = json_decode($result, associative: true);
+
+        return new Encapsulation($resultJson['sharedKey'], $resultJson['encapsulated']['value']);
     }
 
     public function decapsulate(string $privateKey, string $ciphertext): string
