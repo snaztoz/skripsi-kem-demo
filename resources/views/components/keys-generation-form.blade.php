@@ -1,4 +1,4 @@
-<form action="/keys-generation" method="POST">
+<form id="form" action="/keys-generation" method="POST">
   @csrf
 
   <div class="row align-items-center">
@@ -17,9 +17,19 @@
     </div>
   </div>
 
-  <input
-    type="submit"
-    value="Generate New Keys"
-    class="btn btn-primary d-block w-100 mt-4"
-  />
+  <button id="form-submit-btn" class="btn btn-primary d-block w-100 mt-4" type="submit">
+    Generate New Keys
+  </button>
+
+  @push('scripts')
+    <script>
+      document.querySelector('#form').addEventListener('submit', (e) => {
+        const button = document.querySelector('#form-submit-btn');
+        button.disabled = true;
+        button.innerHTML =
+          '<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>' +
+          '<span class="ms-2" role="status">Generating...</span>'
+      });
+    </script>
+  @endpush
 </form>
