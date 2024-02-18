@@ -10,4 +10,9 @@ class KeyRepository
     {
         Storage::put('public.pem', $publicKey);
     }
+
+    public function storePrivateKey(string $privateKey)
+    {
+        Storage::put('private.pem', $privateKey);
+    }
 }

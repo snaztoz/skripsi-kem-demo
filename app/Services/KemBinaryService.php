@@ -24,10 +24,10 @@ class KemBinaryService implements KemService
             $command->push('--rsa');
         }
 
-        $result = Process::run($command->toArray())->output();
-        $resultJson = json_decode($result, associative: true);
+        $resultJson = Process::run($command->toArray())->output();
+        $result = json_decode($resultJson, associative: true);
 
-        return new Keypair($resultJson['publicKey'], $resultJson['privateKey']);
+        return new Keypair($result['publicKey'], $result['privateKey']);
     }
 
     public function encapsulate(string $publicKey, string $encoding): Encapsulation
@@ -40,14 +40,21 @@ class KemBinaryService implements KemService
         }
         $command->push(storage_path('app/public.pem'));
 
-        $result = Process::run($command->toArray())->output();
-        $resultJson = json_decode($result, associative: true);
+        $resultJson = Process::run($command->toArray())->output();
+        $result = json_decode($resultJson, associative: true);
 
-        return new Encapsulation($resultJson['sharedKey'], $resultJson['encapsulated']['value']);
+        return new Encapsulation($result['sharedKey'], $result['encapsulated']['value']);
     }
 
     public function decapsulate(string $privateKey, string $ciphertext): string
     {
-        return 'some-secret';
+        $this->keyRepository->storePrivateKey($privateKey);
+
+        $command = [$this->bin, 'decapsulate', storage_path('app/private.pem')];
+
+        $resultJson = Process::input($ciphertext)->run($command)->output();
+        $result = json_decode($resultJson, associative: true);
+
+        return $result['sharedKey'];
     }
 }
