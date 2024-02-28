@@ -17,12 +17,15 @@ class KemBinaryService implements KemService
         $this->bin = storage_path('app/bin/kem');
     }
 
-    public function generateKeypair(string $alg = 'kyber'): Keypair
+    public function generateKeypair(string $alg = 'kyber-512'): Keypair
     {
+        [$alg, $securityLevel] = $this->explodeAlg($alg);
+
         $command = collect([$this->bin, 'gen-keypair']);
         if ($alg === 'rsa') {
             $command->push('--rsa');
         }
+        $command->push("--sec-level=$securityLevel");
 
         $resultJson = Process::run($command->toArray())->output();
         $result = json_decode($resultJson, associative: true);
@@ -56,5 +59,18 @@ class KemBinaryService implements KemService
         $result = json_decode($resultJson, associative: true);
 
         return $result['sharedKey'];
+    }
+
+    private function explodeAlg(string $alg): array
+    {
+        return match ($alg) {
+            'kyber-512' => ['kyber', 1],
+            'kyber-768' => ['kyber', 2],
+            'kyber-1024' => ['kyber', 3],
+            'rsa-3072' => ['rsa', 1],
+            'rsa-7680' => ['rsa', 2],
+            'rsa-15360' => ['rsa', 3],
+            default => throw new \Exception("Invalid algorithm identifier: $alg"),
+        };
     }
 }

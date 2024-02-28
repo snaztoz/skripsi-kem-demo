@@ -22,7 +22,10 @@ class KemController extends Controller
     public function keysGeneration(Request $request)
     {
         $validated = $request->validate([
-            'algorithm' => ['required', 'in:kyber,rsa'],
+            'algorithm' => [
+                'required',
+                'in:kyber-512,kyber-768,kyber-1024,rsa-3072,rsa-7680,rsa-15360',
+            ],
         ]);
 
         $keypair = $this

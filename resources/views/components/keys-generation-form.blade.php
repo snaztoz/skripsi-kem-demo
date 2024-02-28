@@ -11,8 +11,12 @@
         class="form-select"
         aria-label="Select algorithm"
       >
-        <option value="kyber">Kyber</option>
-        <option value="rsa">RSA</option>
+        <option value="kyber-512">Kyber-512</option>
+        <option value="kyber-768">Kyber-768</option>
+        <option value="kyber-1024">Kyber-1024</option>
+        <option value="rsa-3072">RSA-3072</option>
+        <option value="rsa-7680">RSA-7680</option>
+        <option value="rsa-15360">RSA-15360</option>
       </select>
     </div>
   </div>
